@@ -1,1080 +1,374 @@
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f5f7fa;
-    direction: rtl;
-}
-
-/* Login Screen */
-.login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-}
-
-.login-screen::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-}
-
-.login-container {
-    background: white;
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-    z-index: 1;
-}
-
-.login-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.login-header i {
-    font-size: 4rem;
-    color: #667eea;
-    margin-bottom: 1rem;
-}
-
-.login-header h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.login-header p {
-    color: #666;
-    font-size: 1rem;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-group {
-    position: relative;
-}
-
-.form-group i {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #667eea;
-    font-size: 1.1rem;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 1rem 1rem 1rem 3rem;
-    border: 2px solid #e9ecef;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: #f8f9fa;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #667eea;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.login-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 1rem;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-}
-
-/* Admin Dashboard */
-.admin-dashboard {
-    display: grid;
-    grid-template-areas: 
-        "header header"
-        "sidebar main";
-    grid-template-columns: 280px 1fr;
-    grid-template-rows: 70px 1fr;
-    min-height: 100vh;
-}
-
-/* Header */
-.admin-header {
-    grid-area: header;
-    background: white;
-    border-bottom: 1px solid #e9ecef;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    z-index: 100;
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
-    height: 100%;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.header-left i {
-    font-size: 2rem;
-    color: #667eea;
-}
-
-.header-left h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.admin-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #666;
-    font-weight: 500;
-}
-
-.logout-btn {
-    background: #dc3545;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-}
-
-.logout-btn:hover {
-    background: #c82333;
-    transform: translateY(-1px);
-}
-
-/* Sidebar */
-.sidebar {
-    grid-area: sidebar;
-    background: white;
-    border-left: 1px solid #e9ecef;
-    padding: 2rem 0;
-}
-
-.sidebar-nav ul {
-    list-style: none;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    color: #666;
-    font-weight: 500;
-}
-
-.nav-item:hover {
-    background: #f8f9fa;
-    color: #667eea;
-}
-
-.nav-item.active {
-    background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
-    color: #667eea;
-    border-left: 4px solid #667eea;
-}
-
-.nav-item i {
-    font-size: 1.2rem;
-    width: 20px;
-}
-
-.badge {
-    background: #dc3545;
-    color: white;
-    font-size: 0.8rem;
-    padding: 0.2rem 0.5rem;
-    border-radius: 10px;
-    margin-right: auto;
-    font-weight: 600;
-}
-
-/* Main Content */
-.main-content {
-    grid-area: main;
-    padding: 2rem;
-    overflow-y: auto;
-}
-
-.content-section {
-    display: none;
-}
-
-.content-section.active {
-    display: block;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #e9ecef;
-}
-
-.section-header h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.section-header i {
-    color: #667eea;
-}
-
-.section-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-/* Buttons */
-.btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-.btn-primary {
-    background: #667eea;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #5a67d8;
-    transform: translateY(-1px);
-}
-
-.btn-success {
-    background: #28a745;
-    color: white;
-}
-
-.btn-success:hover {
-    background: #218838;
-    transform: translateY(-1px);
-}
-
-.btn-warning {
-    background: #ffc107;
-    color: #212529;
-}
-
-.btn-warning:hover {
-    background: #e0a800;
-    transform: translateY(-1px);
-}
-
-.btn-danger {
-    background: #dc3545;
-    color: white;
-}
-
-.btn-danger:hover {
-    background: #c82333;
-    transform: translateY(-1px);
-}
-
-.btn-secondary {
-    background: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #5a6268;
-    transform: translateY(-1px);
-}
-
-/* Stats Grid */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.stat-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-icon {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
-
-.stat-info h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.stat-info p {
-    color: #666;
-    font-weight: 500;
-}
-
-/* Charts Grid */
-.charts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.chart-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.chart-card h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.chart-content {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-}
-
-.activity-list {
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.activity-item {
-    padding: 1rem 0;
-    border-bottom: 1px solid #e9ecef;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.activity-item:last-child {
-    border-bottom: none;
-}
-
-.activity-icon {
-    background: #f8f9fa;
-    color: #667eea;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.activity-info {
-    flex: 1;
-}
-
-.activity-info h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.2rem;
-}
-
-.activity-info p {
-    font-size: 0.8rem;
-    color: #666;
-}
-
-/* Filter Tabs */
-.filter-tabs, .matches-tabs, .participants-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    background: white;
-    padding: 0.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.filter-tab, .match-tab, .participant-tab {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    color: #666;
-}
-
-.filter-tab.active, .match-tab.active, .participant-tab.active {
-    background: #667eea;
-    color: white;
-}
-
-.filter-tab:hover, .match-tab:hover, .participant-tab:hover {
-    background: rgba(102, 126, 234, 0.1);
-    color: #667eea;
-}
-
-.filter-tab.active:hover, .match-tab.active:hover, .participant-tab.active:hover {
-    background: #5a67d8;
-    color: white;
-}
-
-/* Registrations List */
-.registrations-list {
-    display: grid;
-    gap: 1rem;
-}
-
-.registration-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-}
-
-.registration-card:hover {
-    transform: translateY(-2px);
-}
-
-.registration-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.registration-name {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.registration-status {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.registration-status.pending {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.registration-status.approved {
-    background: #d4edda;
-    color: #155724;
-}
-
-.registration-status.rejected {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.registration-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-}
-
-.info-label {
-    font-size: 0.8rem;
-    color: #666;
-    font-weight: 500;
-}
-
-.info-value {
-    font-weight: 600;
-    color: #333;
-}
-
-.registration-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-}
-
-/* Tournament Admin Cards */
-.tournaments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-.tournament-admin-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-.tournament-admin-card:hover {
-    transform: translateY(-5px);
-}
-
-.tournament-admin-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 2rem;
-    text-align: center;
-}
-
-.tournament-admin-header i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.tournament-admin-header h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-}
-
-.tournament-admin-stats {
-    padding: 2rem;
-}
-
-.stat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.stat:last-child {
-    border-bottom: none;
-}
-
-.stat .label {
-    color: #666;
-    font-weight: 500;
-}
-
-.stat .value {
-    font-weight: 700;
-    color: #333;
-}
-
-.status-badge {
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.status-badge.open {
-    background: #d4edda;
-    color: #155724;
-}
-
-.status-badge.playing {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.status-badge.closed {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.tournament-admin-actions {
-    padding: 1.5rem 2rem;
-    background: #f8f9fa;
-}
-
-.tournament-admin-actions .btn {
-    width: 100%;
-    justify-content: center;
-}
-
-/* Matches List */
-.matches-list {
-    display: grid;
-    gap: 1rem;
-}
-
-.match-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.3s ease;
-}
-
-.match-card:hover {
-    transform: translateY(-2px);
-}
-
-.match-info {
-    flex: 1;
-}
-
-.match-teams {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.match-score {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #667eea;
-    margin-bottom: 0.5rem;
-}
-
-.match-date {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.match-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-/* Standings Content */
-.standings-content {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
-
-.standings-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.standings-table th,
-.standings-table td {
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.standings-table th {
-    background: #f8f9fa;
-    font-weight: 600;
-    color: #333;
-}
-
-.standings-table tr:hover {
-    background: #f8f9fa;
-}
-
-.standings-table .position {
-    font-weight: 700;
-    color: #667eea;
-}
-
-.standings-table .team-name {
-    text-align: right;
-    font-weight: 600;
-}
-
-.standings-table .points {
-    font-weight: 700;
-    color: #28a745;
-}
-
-/* Participants List */
-.participants-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-}
-
-.participant-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-}
-
-.participant-card:hover {
-    transform: translateY(-2px);
-}
-
-.participant-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.participant-email {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-.participant-status {
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.participant-status.active {
-    background: #d4edda;
-    color: #155724;
-}
-
-.participant-status.eliminated {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.participant-status.winner {
-    background: #fff3cd;
-    color: #856404;
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 15px 15px 0 0;
-}
-
-.modal-header h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-}
-
-.close {
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close:hover {
-    color: #ffd700;
-}
-
-.modal-form {
-    padding: 2rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-.modal-form .form-group {
-    margin-bottom: 1.5rem;
-}
-
-.modal-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.modal-form input,
-.modal-form select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.modal-form input:focus,
-.modal-form select:focus {
-    outline: none;
-    border-color: #667eea;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    margin-top: 2rem;
-}
-
-/* Success/Error Messages */
-.message {
-    padding: 1rem;
-    border-radius: 10px;
-    margin: 1rem 0;
-    font-weight: 600;
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    z-index: 3000;
-    min-width: 300px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.message.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.message.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-/* Loading Animation */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #667eea;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Chart Bars Styles */
-.chart-bars {
-    display: flex;
-    justify-content: space-around;
-    align-items: end;
-    height: 150px;
-    padding: 1rem 0;
-}
-
-.chart-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.bar-container {
-    width: 40px;
-    height: 100px;
-    background: #f8f9fa;
-    border-radius: 5px;
-    display: flex;
-    align-items: end;
-    overflow: hidden;
-}
-
-.bar {
-    width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 5px 5px 0 0;
-    transition: height 0.3s ease;
-    min-height: 5px;
-}
-
-.bar-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.bar-value {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #667eea;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .admin-dashboard {
-        grid-template-areas: 
-            "header"
-            "main";
-        grid-template-columns: 1fr;
-        grid-template-rows: 70px 1fr;
-    }
-    
-    .sidebar {
-        display: none;
-    }
-    
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        padding: 1rem;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .registration-info {
-        grid-template-columns: 1fr;
-    }
-    
-    .match-card {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-    
-    .match-actions {
-        justify-content: center;
-    }
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة إدارة بطولات فيفا 26</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <i class="fas fa-shield-alt"></i>
+                <h1>لوحة إدارة البطولات</h1>
+                <p>تسجيل دخول المدير</p>
+            </div>
+            <form id="adminLoginForm" class="login-form">
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="adminUsername" placeholder="اسم المستخدم" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="adminPassword" placeholder="كلمة المرور" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    دخول
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <i class="fas fa-trophy"></i>
+                    <h1>لوحة إدارة بطولات فيفا 26</h1>
+                </div>
+                <div class="header-right">
+                    <div class="admin-info">
+                        <i class="fas fa-user-shield"></i>
+                        <span>مرحباً، المدير</span>
+                    </div>
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-section="overview">
+                        <i class="fas fa-chart-line"></i>
+                        <span>نظرة عامة</span>
+                    </li>
+                    <li class="nav-item" data-section="registrations">
+                        <i class="fas fa-user-plus"></i>
+                        <span>طلبات التسجيل</span>
+                        <span class="badge" id="pendingBadge">0</span>
+                    </li>
+                    <li class="nav-item" data-section="tournaments">
+                        <i class="fas fa-trophy"></i>
+                        <span>إدارة البطولات</span>
+                    </li>
+                    <li class="nav-item" data-section="matches">
+                        <i class="fas fa-futbol"></i>
+                        <span>المباريات والنتائج</span>
+                    </li>
+                    <li class="nav-item" data-section="standings">
+                        <i class="fas fa-list-ol"></i>
+                        <span>الترتيب والإحصائيات</span>
+                    </li>
+                    <li class="nav-item" data-section="participants">
+                        <i class="fas fa-users"></i>
+                        <span>المشاركين</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> نظرة عامة</h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalRegistrations">0</h3>
+                            <p>إجمالي التسجيلات</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pendingRegistrations">0</h3>
+                            <p>طلبات معلقة</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="activeTournaments">3</h3>
+                            <p>البطولات النشطة</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalMatches">0</h3>
+                            <p>إجمالي المباريات</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>توزيع التسجيلات حسب البطولة</h3>
+                        <div id="registrationChart" class="chart-content">
+                            <!-- Chart will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>آخر الأنشطة</h3>
+                        <div id="recentActivity" class="activity-list">
+                            <!-- Activities will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Registrations Section -->
+            <section id="registrations" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-plus"></i> طلبات التسجيل</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="refreshRegistrations()">
+                            <i class="fas fa-sync-alt"></i> تحديث
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-status="pending">المعلقة</button>
+                    <button class="filter-tab" data-status="approved">المقبولة</button>
+                    <button class="filter-tab" data-status="rejected">المرفوضة</button>
+                    <button class="filter-tab" data-status="all">الكل</button>
+                </div>
+
+                <div id="registrationsList" class="registrations-list">
+                    <!-- Registrations will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Tournaments Section -->
+            <section id="tournaments" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-trophy"></i> إدارة البطولات</h2>
+                </div>
+                
+                <div class="tournaments-grid">
+                    <div class="tournament-admin-card" data-type="league">
+                        <div class="tournament-admin-header">
+                            <i class="fas fa-list-ol"></i>
+                            <h3>بطولة الدوري الممتاز</h3>
+                        </div>
+                        <div class="tournament-admin-stats">
+                            <div class="stat">
+                                <span class="label">المشاركين:</span>
+                                <span class="value" id="leagueParticipants">0/16</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">المباريات:</span>
+                                <span class="value" id="leagueMatches">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">الحالة:</span>
+                                <span class="status-badge open" id="leagueStatus">مفتوح</span>
+                            </div>
+                        </div>
+                        <div class="tournament-admin-actions">
+                            <button class="btn btn-primary" onclick="manageTournament('league')">
+                                <i class="fas fa-cog"></i> إدارة
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tournament-admin-card" data-type="online">
+                        <div class="tournament-admin-header">
+                            <i class="fas fa-wifi"></i>
+                            <h3>كأس فيفا الرقمي</h3>
+                        </div>
+                        <div class="tournament-admin-stats">
+                            <div class="stat">
+                                <span class="label">المشاركين:</span>
+                                <span class="value" id="onlineParticipants">0/32</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">المباريات:</span>
+                                <span class="value" id="onlineMatches">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">الحالة:</span>
+                                <span class="status-badge open" id="onlineStatus">مفتوح</span>
+                            </div>
+                        </div>
+                        <div class="tournament-admin-actions">
+                            <button class="btn btn-primary" onclick="manageTournament('online')">
+                                <i class="fas fa-cog"></i> إدارة
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tournament-admin-card" data-type="offline">
+                        <div class="tournament-admin-header">
+                            <i class="fas fa-users"></i>
+                            <h3>بطولة الأبطال الحضورية</h3>
+                        </div>
+                        <div class="tournament-admin-stats">
+                            <div class="stat">
+                                <span class="label">المشاركين:</span>
+                                <span class="value" id="offlineParticipants">0/16</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">المباريات:</span>
+                                <span class="value" id="offlineMatches">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">الحالة:</span>
+                                <span class="status-badge open" id="offlineStatus">مفتوح</span>
+                            </div>
+                        </div>
+                        <div class="tournament-admin-actions">
+                            <button class="btn btn-primary" onclick="manageTournament('offline')">
+                                <i class="fas fa-cog"></i> إدارة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Matches Section -->
+            <section id="matches" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-futbol"></i> المباريات والنتائج</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-success" onclick="showAddMatchModal()">
+                            <i class="fas fa-plus"></i> إضافة مباراة
+                        </button>
+                    </div>
+                </div>
+
+                <div class="matches-tabs">
+                    <button class="match-tab active" data-tournament="league">الدوري</button>
+                    <button class="match-tab" data-tournament="online">الرقمي</button>
+                    <button class="match-tab" data-tournament="offline">الحضوري</button>
+                </div>
+
+                <div id="matchesList" class="matches-list">
+                    <!-- Matches will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Standings Section -->
+            <section id="standings" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list-ol"></i> الترتيب والإحصائيات</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-warning" onclick="recalculateStandings()">
+                            <i class="fas fa-calculator"></i> إعادة حساب
+                        </button>
+                    </div>
+                </div>
+
+                <div id="standingsContent" class="standings-content">
+                    <!-- Standings will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Participants Section -->
+            <section id="participants" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> المشاركين</h2>
+                </div>
+
+                <div class="participants-tabs">
+                    <button class="participant-tab active" data-tournament="league">الدوري</button>
+                    <button class="participant-tab" data-tournament="online">الرقمي</button>
+                    <button class="participant-tab" data-tournament="offline">الحضوري</button>
+                </div>
+
+                <div id="participantsList" class="participants-list">
+                    <!-- Participants will be populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Match Modal -->
+    <div id="addMatchModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة مباراة جديدة</h3>
+                <span class="close" onclick="closeAddMatchModal()">&times;</span>
+            </div>
+            <form id="addMatchForm" class="modal-form">
+                <div class="form-group">
+                    <label>نوع البطولة</label>
+                    <select id="matchTournament" required>
+                        <option value="">اختر البطولة</option>
+                        <option value="league">بطولة الدوري الممتاز</option>
+                        <option value="online">كأس فيفا الرقمي</option>
+                        <option value="offline">بطولة الأبطال الحضورية</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>الفريق الأول</label>
+                        <input type="text" id="team1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الفريق الثاني</label>
+                        <input type="text" id="team2" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>نتيجة الفريق الأول</label>
+                        <input type="number" id="score1" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نتيجة الفريق الثاني</label>
+                        <input type="number" id="score2" min="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>تاريخ المباراة</label>
+                    <input type="datetime-local" id="matchDate" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddMatchModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-success">إضافة المباراة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
+    <script type="module" src="admin-script.js"></script>
+</body>
+</html>

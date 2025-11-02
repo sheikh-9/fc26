@@ -5,6 +5,9 @@ let slideInterval;
 let currentTournament = null;
 let supabase;
 
+// Import database config
+import { DATABASE_CONFIG, getProjectId, validateConfig } from './config/database.js';
+
 // DOM Elements
 const tournamentModal = document.getElementById('tournamentModal');
 const registrationForm = document.getElementById('registrationForm');
@@ -24,12 +27,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize Supabase
 function initializeSupabase() {
-    const SUPABASE_URL = 'https://fgoylqtdqhzduuezctrf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnb3lscXRkcWh6ZHV1ZXpjdHJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTc1OTksImV4cCI6MjA3NDQ5MzU5OX0.FPjgccBsg1MFD5ntRZSC4DOO-t9ClMLOzO3lq8aj4LQ';
+    console.log('🔗 محاولة الاتصال بـ Supabase من ملف Config...');
     
-    console.log('🔗 محاولة الاتصال بـ Supabase...');
-    console.log('📍 URL:', SUPABASE_URL);
-    console.log('🔑 Key exists:', !!SUPABASE_ANON_KEY);
+    try {
+        // Validate config first
+        validateConfig();
+        
+        const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+        
+        console.log('📍 URL:', SUPABASE_URL);
+        console.log('🔑 Key exists:', !!SUPABASE_ANON_KEY);
+        console.log('🆔 Project ID:', getProjectId());
+        console.log('🏆 Tournament Settings:', DATABASE_CONFIG.TOURNAMENT_SETTINGS);
+        
+        if (typeof window.supabase === 'undefined') {
+            console.error('❌ مكتبة Supabase غير محملة!');
+            showMessage('خطأ: مكتبة قاعدة البيانات غير محملة', 'error');
+            return;
+        }
+        
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ تم إنشاء عميل Supabase بنجاح من ملف Config');
+        
+        // Test connection immediately
+        testDatabaseConnection();
+        
+    } catch (error) {
+        console.error('❌ خطأ في إعدادات قاعدة البيانات:', error);
+        showMessage('خطأ في إعدادات قاعدة البيانات: ' + error.message, 'error');
+        
+        // Show config file location
+        console.log(`
+🔧 لإصلاح المشكلة:
+1. افتح ملف: config/database.js
+2. تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY
+3. احفظ الملف وحدث الصفحة
+        `);
+    }
+}
+
+// Old initializeSupabase function content moved here
+function initializeSupabaseOld() {
+    // Get Supabase credentials from config file
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
     
     try {
         if (typeof window.supabase === 'undefined') {

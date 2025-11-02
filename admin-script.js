@@ -1,4 +1,7 @@
 
+// Import database config
+import { DATABASE_CONFIG, getProjectId, validateConfig } from './config/database.js';
+
 const ADMIN_CREDENTIALS = {
     username: 'fifa2026admin',
     password: 'fifa2026admin'
@@ -24,12 +27,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize Supabase for admin
 function initializeAdminSupabase() {
-    const SUPABASE_URL = 'https://qjfeudqrpjsygnobppmc.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqZmV1ZHFycGpzeWdub2JwcG1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NDUyNzMsImV4cCI6MjA3NTUyMTI3M30.8Su8JnX94XZC1OSFIMk5YyAAZW2ZliW-jIf2A6X0qBE';
+    console.log('🔗 [إدارة] محاولة الاتصال بـ Supabase من ملف Config...');
     
-    console.log('🔗 [إدارة] محاولة الاتصال بـ Supabase...');
-    console.log('📍 [إدارة] URL:', SUPABASE_URL);
-    console.log('🔑 [إدارة] Key exists:', !!SUPABASE_ANON_KEY);
+    try {
+        // Validate config first
+        validateConfig();
+        
+        const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+        
+        console.log('📍 [إدارة] URL:', SUPABASE_URL);
+        console.log('🔑 [إدارة] Key exists:', !!SUPABASE_ANON_KEY);
+        console.log('🆔 [إدارة] Project ID:', getProjectId());
+        console.log('⚙️ [إدارة] Config loaded successfully');
+        
+        if (typeof window.supabase === 'undefined') {
+            console.error('❌ [إدارة] مكتبة Supabase غير محملة!');
+            showMessage('خطأ: مكتبة قاعدة البيانات غير محملة', 'error');
+            return;
+        }
+        
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ [إدارة] تم إنشاء عميل Supabase بنجاح من ملف Config');
+        
+        // Test admin database connection
+        testAdminDatabaseConnection();
+        
+    } catch (error) {
+        console.error('❌ [إدارة] خطأ في إعدادات قاعدة البيانات:', error);
+        showMessage('خطأ في إعدادات قاعدة البيانات: ' + error.message, 'error');
+        
+        // Show config file location
+        console.log(`
+🔧 [إدارة] لإصلاح المشكلة:
+1. افتح ملف: config/database.js
+2. تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY
+3. احفظ الملف وحدث الصفحة
+        `);
+    }
+}
+
+// Old function content
+function initializeAdminSupabaseOld() {
+    // Get Supabase credentials from config file
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
     
     try {
         if (typeof window.supabase === 'undefined') {

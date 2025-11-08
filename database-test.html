@@ -3,16 +3,16 @@
              console.log('🧪 بدء اختبار قاعدة البيانات...');
              
              try {
-+                // Show config info
-+                console.log('📋 معلومات Config:');
-+                console.log('📍 URL:', DATABASE_CONFIG.SUPABASE_URL);
-+                console.log('🆔 Project ID:', getProjectId());
-+                console.log('🏆 Tournaments:', Object.keys(DATABASE_CONFIG.TOURNAMENT_SETTINGS));
-+                
-                 // Validate config
-                 validateConfig();
+                 // Show config info
+                 console.log('📋 معلومات Config:');
+                 console.log('📍 URL:', window.DATABASE_CONFIG.SUPABASE_URL);
+                 console.log('🆔 Project ID:', window.getProjectId());
+                 console.log('🏆 Tournaments:', Object.keys(window.DATABASE_CONFIG.TOURNAMENT_SETTINGS));
                  
-                 const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+                 // Validate config
+                 window.validateConfig();
+                 
+                 const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.DATABASE_CONFIG;
                  
                  if (typeof window.supabase === 'undefined') {
                      throw new Error('مكتبة Supabase غير محملة');
@@ -74,7 +74,7 @@
                          <div class="config-help">
                              <h4>🔧 لإصلاح المشكلة:</h4>
                              <ol>
-                                 <li>افتح ملف: <code>config/database.js</code></li>
+                                 <li>افتح ملف: <code>config.js</code></li>
                                  <li>تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY</li>
                                  <li>احفظ الملف وحدث الصفحة</li>
                              </ol>

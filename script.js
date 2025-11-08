@@ -5,9 +5,6 @@ let slideInterval;
 let currentTournament = null;
 let supabase;
 
-// Import database config
-import { DATABASE_CONFIG, getProjectId, validateConfig } from './config/database.js';
-
 // DOM Elements
 const tournamentModal = document.getElementById('tournamentModal');
 const registrationForm = document.getElementById('registrationForm');
@@ -31,15 +28,14 @@ function initializeSupabase() {
     
     try {
         // Validate config first
-        validateConfig();
+        window.validateConfig();
         
-        const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+        const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.DATABASE_CONFIG;
         
         console.log('📍 URL:', SUPABASE_URL);
         console.log('🔑 Key exists:', !!SUPABASE_ANON_KEY);
-        console.log('🆔 Project ID:', getProjectId());
-        console.log('🏆 Tournament Settings:', DATABASE_CONFIG.TOURNAMENT_SETTINGS);
-        console.log('🏆 Tournament Settings:', DATABASE_CONFIG.TOURNAMENT_SETTINGS);
+        console.log('🆔 Project ID:', window.getProjectId());
+        console.log('🏆 Tournament Settings:', window.DATABASE_CONFIG.TOURNAMENT_SETTINGS);
         
         if (typeof window.supabase === 'undefined') {
             console.error('❌ مكتبة Supabase غير محملة!');
@@ -60,7 +56,7 @@ function initializeSupabase() {
         // Show config file location
         console.log(`
 🔧 لإصلاح المشكلة:
-1. افتح ملف: config/database.js
+1. افتح ملف: config.js
 2. تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY
 3. احفظ الملف وحدث الصفحة
         `);

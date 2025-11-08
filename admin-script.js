@@ -1,7 +1,4 @@
 
-// Import database config
-import { DATABASE_CONFIG, getProjectId, validateConfig } from './config/database.js';
-
 const ADMIN_CREDENTIALS = {
     username: 'fifa2026admin',
     password: 'fifa2026admin'
@@ -31,13 +28,13 @@ function initializeAdminSupabase() {
     
     try {
         // Validate config first
-        validateConfig();
+        window.validateConfig();
         
-        const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+        const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.DATABASE_CONFIG;
         
         console.log('📍 [إدارة] URL:', SUPABASE_URL);
         console.log('🔑 [إدارة] Key exists:', !!SUPABASE_ANON_KEY);
-        console.log('🆔 [إدارة] Project ID:', getProjectId());
+        console.log('🆔 [إدارة] Project ID:', window.getProjectId());
         console.log('⚙️ [إدارة] Config loaded successfully');
         
         if (typeof window.supabase === 'undefined') {
@@ -59,7 +56,7 @@ function initializeAdminSupabase() {
         // Show config file location
         console.log(`
 🔧 [إدارة] لإصلاح المشكلة:
-1. افتح ملف: config/database.js
+1. افتح ملف: config.js
 2. تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY
 3. احفظ الملف وحدث الصفحة
         `);

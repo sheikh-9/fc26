@@ -68,10 +68,19 @@ function initializeAdminSupabase() {
 
 // Old function content
 function initializeAdminSupabaseOld() {
-    // Get Supabase credentials from config file
-    const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+    console.log('🔗 [إدارة] محاولة الاتصال بـ Supabase من ملف Config...');
     
     try {
+        // Validate config first
+        validateConfig();
+        
+        const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+        
+        console.log('📍 [إدارة] URL:', SUPABASE_URL);
+        console.log('🔑 [إدارة] Key exists:', !!SUPABASE_ANON_KEY);
+        console.log('🆔 [إدارة] Project ID:', getProjectId());
+        console.log('⚙️ [إدارة] Config loaded successfully');
+        
         if (typeof window.supabase === 'undefined') {
             console.error('❌ [إدارة] مكتبة Supabase غير محملة!');
             showMessage('خطأ: مكتبة قاعدة البيانات غير محملة', 'error');
@@ -79,14 +88,22 @@ function initializeAdminSupabaseOld() {
         }
         
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('✅ [إدارة] تم إنشاء عميل Supabase بنجاح');
+        console.log('✅ [إدارة] تم إنشاء عميل Supabase بنجاح من ملف Config');
         
         // Test admin database connection
         testAdminDatabaseConnection();
         
     } catch (error) {
-        console.error('❌ [إدارة] فشل في إنشاء عميل Supabase:', error);
-        showMessage('خطأ في الاتصال بقاعدة البيانات: ' + error.message, 'error');
+        console.error('❌ [إدارة] خطأ في إعدادات قاعدة البيانات:', error);
+        showMessage('خطأ في إعدادات قاعدة البيانات: ' + error.message, 'error');
+        
+        // Show config file location
+        console.log(`
+🔧 [إدارة] لإصلاح المشكلة:
+1. افتح ملف: config/database.js
+2. تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY
+3. احفظ الملف وحدث الصفحة
+        `);
     }
 }
 

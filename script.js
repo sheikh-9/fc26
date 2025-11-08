@@ -39,6 +39,7 @@ function initializeSupabase() {
         console.log('🔑 Key exists:', !!SUPABASE_ANON_KEY);
         console.log('🆔 Project ID:', getProjectId());
         console.log('🏆 Tournament Settings:', DATABASE_CONFIG.TOURNAMENT_SETTINGS);
+        console.log('🏆 Tournament Settings:', DATABASE_CONFIG.TOURNAMENT_SETTINGS);
         
         if (typeof window.supabase === 'undefined') {
             console.error('❌ مكتبة Supabase غير محملة!');
@@ -79,14 +80,22 @@ function initializeSupabaseOld() {
         }
         
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('✅ تم إنشاء عميل Supabase بنجاح');
+        console.log('✅ تم إنشاء عميل Supabase بنجاح من ملف Config');
         
         // Test connection immediately
         testDatabaseConnection();
         
     } catch (error) {
-        console.error('❌ فشل في إنشاء عميل Supabase:', error);
-        showMessage('خطأ في الاتصال بقاعدة البيانات: ' + error.message, 'error');
+        console.error('❌ خطأ في إعدادات قاعدة البيانات:', error);
+        showMessage('خطأ في إعدادات قاعدة البيانات: ' + error.message, 'error');
+        
+        // Show config file location
+        console.log(`
+🔧 لإصلاح المشكلة:
+1. افتح ملف: config/database.js
+2. تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY
+3. احفظ الملف وحدث الصفحة
+        `);
     }
 }
 

@@ -1,0 +1,85 @@
+@@ .. @@
+         async function testDatabaseConnection() {
+             console.log('🧪 بدء اختبار قاعدة البيانات...');
+             
+             try {
++                // Show config info
++                console.log('📋 معلومات Config:');
++                console.log('📍 URL:', DATABASE_CONFIG.SUPABASE_URL);
++                console.log('🆔 Project ID:', getProjectId());
++                console.log('🏆 Tournaments:', Object.keys(DATABASE_CONFIG.TOURNAMENT_SETTINGS));
++                
+                 // Validate config
+                 validateConfig();
+                 
+                 const { SUPABASE_URL, SUPABASE_ANON_KEY } = DATABASE_CONFIG;
+                 
+                 if (typeof window.supabase === 'undefined') {
+                     throw new Error('مكتبة Supabase غير محملة');
+                 }
+                 
+                 supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                 console.log('✅ تم إنشاء عميل Supabase');
+                 
+                 // Test each table
+                 const tables = [
+                     'registrations',
+                     'tournaments', 
+                     'league_standings',
+                     'league_matches',
+                     'knockout_matches',
+                     'tournament_participants'
+                 ];
+                 
+                 let results = [];
+                 
+                 for (const table of tables) {
+                     try {
+                         const { data, error, count } = await supabase
+                             .from(table)
+                             .select('*', { count: 'exact', head: true });
+                         
+                         if (error) throw error;
+                         
+                         results.push({
+                             table: table,
+                             status: 'success',
+                             count: count || 0,
+                             message: `✅ ${table}: ${count || 0} سجل`
+                         });
+                         
+                         console.log(`✅ ${table}: ${count || 0} سجل`);
+                         
+                     } catch (error) {
+                         results.push({
+                             table: table,
+                             status: 'error',
+                             count: 0,
+                             message: `❌ ${table}: ${error.message}`
+                         });
+                         
+                         console.error(`❌ ${table}:`, error);
+                     }
+                 }
+                 
+                 // Display results
+                 displayResults(results);
+                 
+             } catch (error) {
+                 console.error('💥 فشل اختبار قاعدة البيانات:', error);
+                 document.getElementById('results').innerHTML = `
+                     <div class="error">
+                         <h3>❌ فشل الاتصال</h3>
+                         <p>${error.message}</p>
+                         <div class="config-help">
+                             <h4>🔧 لإصلاح المشكلة:</h4>
+                             <ol>
+                                 <li>افتح ملف: <code>config/database.js</code></li>
+                                 <li>تأكد من صحة SUPABASE_URL و SUPABASE_ANON_KEY</li>
+                                 <li>احفظ الملف وحدث الصفحة</li>
+                             </ol>
+                         </div>
+                     </div>
+                 `;
+             }
+         }

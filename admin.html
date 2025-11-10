@@ -339,12 +339,20 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>الفريق الأول</label>
-                        <input type="text" id="team1" required>
+                        <select id="team1" required>
+                            <option value="">اختر الفريق الأول</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>الفريق الثاني</label>
-                        <input type="text" id="team2" required>
+                        <select id="team2" required>
+                            <option value="">اختر الفريق الثاني</option>
+                        </select>
                     </div>
+                </div>
+                <div class="form-group" id="roundGroup" style="display: none;">
+                    <label>رقم الجولة</label>
+                    <input type="number" id="matchRound" min="1" value="1">
                 </div>
                 <div class="form-row">
                     <div class="form-group">

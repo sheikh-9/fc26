@@ -792,6 +792,11 @@ body {
 /* Participants List */
 .participants-list {
     display: grid;
+    gap: 1rem;
+}
+
+.participants-grid {
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
 }
@@ -841,6 +846,17 @@ body {
 .participant-status.winner {
     background: #fff3cd;
     color: #856404;
+}
+
+.participant-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
 }
 
 /* Modal */

@@ -628,11 +628,13 @@ function displayStandings(standings) {
 // 👥 تحميل المشاركين
 async function loadParticipants(tournament = 'league') {
     try {
-        const { data, error } = await supabase
-            .from('tournament_participants')
+        // محاولة تحميل المشاركين من جدول tournament_participants
+        let { data, error } = await supabase
+            .from('registrations')
             .select('*')
             .eq('tournament_type', tournament)
-            .order('joined_at', { ascending: false });
+            .eq('status', 'approved')
+            .order('created_at', { ascending: false });
         
         if (error) throw error;
         
@@ -640,6 +642,7 @@ async function loadParticipants(tournament = 'league') {
         
     } catch (error) {
         console.error('Error loading participants:', error);
+        showMessage('خطأ في تحميل المشاركين: ' + error.message, 'error');
     }
 }
 
@@ -1082,6 +1085,19 @@ function manageTournament(type) {
         }
     });
 }
+
+// جعل الدوال متاحة عالمياً
+window.manageTournament = manageTournament;
+window.showAddMatchModal = showAddMatchModal;
+window.closeAddMatchModal = closeAddMatchModal;
+window.refreshRegistrations = refreshRegistrations;
+window.recalculateStandings = recalculateStandings;
+window.approveRegistration = approveRegistration;
+window.rejectRegistration = rejectRegistration;
+window.handleAddParticipant = handleAddParticipant;
+window.removeParticipant = removeParticipant;
+window.deleteMatch = deleteMatch;
+window.handleAddMatch = handleAddMatch;
 
 // 📱 عرض القسم
 function showSection(sectionName) {

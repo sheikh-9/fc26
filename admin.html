@@ -376,6 +376,18 @@
         </div>
     </div>
 
+    <!-- تحديد تاريخ اليوم كافتراضي -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            const matchDateInput = document.getElementById('matchDate');
+            if (matchDateInput) {
+                matchDateInput.value = localDateTime;
+            }
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
     <script src="config.js"></script>
     <script type="module" src="admin-script.js"></script>

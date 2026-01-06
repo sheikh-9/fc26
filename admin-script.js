@@ -421,34 +421,44 @@ function displayRegistrations(registrations) {
 // ✅ قبول التسجيل
 async function approveRegistration(registrationId, playerName, tournamentType) {
     try {
+        // جلب بيانات التسجيل الكاملة
+        const { data: registration, error: fetchError } = await supabase
+            .from('registrations')
+            .select('*')
+            .eq('id', registrationId)
+            .maybeSingle();
+
+        if (fetchError) throw fetchError;
+        if (!registration) throw new Error('لم يتم العثور على التسجيل');
+
         // تحديث حالة التسجيل
         const { error: updateError } = await supabase
             .from('registrations')
             .update({ status: 'approved', updated_at: new Date().toISOString() })
             .eq('id', registrationId);
-        
+
         if (updateError) throw updateError;
-        
+
         // إضافة المشارك إلى جدول المشاركين
         const { error: insertError } = await supabase
             .from('tournament_participants')
             .insert([{
-                player_name: playerName,
-                email: '', // سيتم تحديثه لاحقاً إذا لزم الأمر
-                tournament_type: tournamentType,
+                player_name: registration.player_name,
+                email: registration.email,
+                tournament_type: registration.tournament_type,
                 status: 'active'
             }]);
-        
+
         if (insertError) throw insertError;
-        
-        showMessage(`تم قبول تسجيل ${playerName} بنجاح`, 'success');
+
+        showMessage(`تم قبول تسجيل ${registration.player_name} بنجاح`, 'success');
         await loadRegistrations();
         await loadOverviewStats();
-        await loadParticipants(tournamentType);
-        
+        await loadParticipants(registration.tournament_type);
+
     } catch (error) {
         console.error('Error approving registration:', error);
-        showMessage('خطأ في قبول التسجيل', 'error');
+        showMessage('خطأ في قبول التسجيل: ' + error.message, 'error');
     }
 }
 
@@ -789,32 +799,43 @@ async function loadParticipantsForMatch() {
     const tournamentSelect = document.getElementById('matchTournament');
     const team1Select = document.getElementById('team1');
     const team2Select = document.getElementById('team2');
-    
+
+    // إزالة أي listeners سابقة
+    tournamentSelect.replaceWith(tournamentSelect.cloneNode(true));
+    const newTournamentSelect = document.getElementById('matchTournament');
+
     // مراقبة تغيير البطولة
-    tournamentSelect.addEventListener('change', async function() {
+    newTournamentSelect.addEventListener('change', async function() {
         const tournament = this.value;
         if (!tournament) {
             team1Select.innerHTML = '<option value="">اختر الفريق الأول</option>';
             team2Select.innerHTML = '<option value="">اختر الفريق الثاني</option>';
             return;
         }
-        
+
         try {
             const { data, error } = await supabase
                 .from('tournament_participants')
                 .select('player_name')
                 .eq('tournament_type', tournament)
                 .eq('status', 'active');
-            
+
             if (error) throw error;
-            
+
+            if (!data || data.length === 0) {
+                team1Select.innerHTML = '<option value="">لا توجد مشاركين</option>';
+                team2Select.innerHTML = '<option value="">لا توجد مشاركين</option>';
+                return;
+            }
+
             const options = data.map(p => `<option value="${p.player_name}">${p.player_name}</option>`).join('');
-            
+
             team1Select.innerHTML = '<option value="">اختر الفريق الأول</option>' + options;
             team2Select.innerHTML = '<option value="">اختر الفريق الثاني</option>' + options;
-            
+
         } catch (error) {
             console.error('Error loading participants for match:', error);
+            showMessage('خطأ في تحميل المشاركين: ' + error.message, 'error');
         }
     });
 }
@@ -878,11 +899,10 @@ async function handleAddMatch(event) {
                     team2_name: matchData.team2_name,
                     team1_score: matchData.team1_score,
                     team2_score: matchData.team2_score,
-                    winner: matchData.team1_score > matchData.team2_score ? matchData.team1_name : matchData.team2_name,
+                    winner_name: matchData.team1_score > matchData.team2_score ? matchData.team1_name : matchData.team2_name,
                     round: round,
                     match_number: 1,
-                    match_date: matchData.match_date,
-                    status: matchData.status
+                    match_date: matchData.match_date
                 }]));
         }
         
